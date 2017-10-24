@@ -1,8 +1,5 @@
-function[dict]=huffman(vectorCategorias)
+function[dict]=huffman(p, catRange)
 
-p = probability(vectorCategorias);
-categorias = 0:8;
-
-dict = huffmandict(categorias,p);
+dict = huffmandict(catRange,p);
 
 end

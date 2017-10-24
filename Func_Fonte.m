@@ -1,4 +1,4 @@
-function  [R,G,B] = Fonte(video, frameNumber)
+function  [R,G,B] = Func_Fonte(video, frameNumber)
 
     x = read(video, frameNumber);
     

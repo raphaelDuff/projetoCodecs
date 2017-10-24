@@ -27,14 +27,22 @@ Pr = 0.713*(R-Y);
 V=size(R,1);
 H=size(R,2);
 
-for i= 1:8:V
-    for j=1:8:H
-        ydct(i:1:i+7,j:1:j+7)=dct(dct(Y(i:1:i+7,j:1:j+7))')'; %cada bloco de 8x8 da matriz xdct recebe a DCT de um bloco 8x8 da matriz X
-        Yq(i:1:i+7,j:1:j+7)=round(ydct(i:1:i+7,j:1:j+7)./(Q1*S)); %cada bloco de 8x8 da matriz xq recebe o resultado da quantização de um bloco 8x8 da matriz xdct
-        Pbdct(i:1:i+7,j:1:j+7)=dct(dct(Pb(i:1:i+7,j:1:j+7))')'; %cada bloco de 8x8 da matriz xdct recebe a DCT de um bloco 8x8 da matriz X
-        Pbq(i:1:i+7,j:1:j+7)=round(Pbdct(i:1:i+7,j:1:j+7)./(Q2*S)); %cada bloco de 8x8 da matriz xq recebe o resultado da quantização de um bloco 8x8 da matriz xdct
-        Prdct(i:1:i+7,j:1:j+7)=dct(dct(Pr(i:1:i+7,j:1:j+7))')'; %cada bloco de 8x8 da matriz xdct recebe a DCT de um bloco 8x8 da matriz X
-        Prq(i:1:i+7,j:1:j+7)=round(Prdct(i:1:i+7,j:1:j+7)./(Q2*S)); %cada bloco de 8x8 da matriz xq recebe o resultado da quantização de um bloco 8x8 da matriz xdct
-    end
-end
+T = dctmtx(8);
+dct_Y =  @(block_struct) round ((T*block_struct.data*T')./(Q1*S));
+dct_PbPr = @(block_struct) round ((T*block_struct.data*T')./(Q2*S));
+
+Yq = blockproc(Y, [8 8], dct_Y);
+Pbq = blockproc(Pb, [8 8], dct_PbPr);
+Prq = blockproc(Pr, [8 8], dct_PbPr);
+
+% for i= 1:8:V
+%     for j=1:8:H
+%         ydct(i:1:i+7,j:1:j+7)=dct(dct(Y(i:1:i+7,j:1:j+7))')'; %cada bloco de 8x8 da matriz xdct recebe a DCT de um bloco 8x8 da matriz X
+%         Yq(i:1:i+7,j:1:j+7)=round(ydct(i:1:i+7,j:1:j+7)./(Q1*S)); %cada bloco de 8x8 da matriz xq recebe o resultado da quantização de um bloco 8x8 da matriz xdct
+%         Pbdct(i:1:i+7,j:1:j+7)=dct(dct(Pb(i:1:i+7,j:1:j+7))')'; %cada bloco de 8x8 da matriz xdct recebe a DCT de um bloco 8x8 da matriz X
+%         Pbq(i:1:i+7,j:1:j+7)=round(Pbdct(i:1:i+7,j:1:j+7)./(Q2*S)); %cada bloco de 8x8 da matriz xq recebe o resultado da quantização de um bloco 8x8 da matriz xdct
+%         Prdct(i:1:i+7,j:1:j+7)=dct(dct(Pr(i:1:i+7,j:1:j+7))')'; %cada bloco de 8x8 da matriz xdct recebe a DCT de um bloco 8x8 da matriz X
+%         Prq(i:1:i+7,j:1:j+7)=round(Prdct(i:1:i+7,j:1:j+7)./(Q2*S)); %cada bloco de 8x8 da matriz xq recebe o resultado da quantização de um bloco 8x8 da matriz xdct
+%     end
+% end
 end

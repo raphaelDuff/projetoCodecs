@@ -1,11 +1,10 @@
-function[txYdc, txYac,txPbPrDC, txPbPrAC]=statistics(concY, concPb, concPr)
+function[txY, txPbPr]=statistics(concY, concPb, concPr)
 %%  Ajusta tamanho dos vetores
 concPbPr=[concPb concPr];
 PbPrDC=zeros(1,length(concPbPr)/64);
 PbPrAC=zeros(1,length(concPbPr)-length(PbPrDC));
 Ydc=zeros(1,length(concY)/64);
 Yac=zeros(1,length(concY)-length(Ydc));
-
 j=1;
 h=1;
 
@@ -59,33 +58,15 @@ catRange=[0:8];
 [tYdc]=huffman(YdcProb, catRange);
 [tYac]=huffman(YacProb, catRange);
 
-%%  TX Categoria 0
-[TX0_tPbPrDC,TX0_tPbPrAC,TX0_tYdc,TX0_tYac]=convHuffMat(tPbPrDC, tPbPrAC, tYdc, tYac, 9);
+txY = func_TX(Yac,Ydc,YacCat,YdcCat,tYac,tYdc);
+txY=txY';
+txPbPr = func_TX(PbPrAC,PbPrDC,PbPrACCat,PbPrDCCat,tPbPrAC,tPbPrDC);
+txPbPr=txPbPr';
 
-%%  TX Categoria 1
-[TX1_tPbPrDC,TX1_tPbPrAC,TX1_tYdc,TX1_tYac]=convHuffMat(tPbPrDC, tPbPrAC, tYdc, tYac, 10);
+% txYac = func_TX(Yac,tYac,YacCat);
+% txYdc = func_TX(Ydc,tYdc,YdcCat);
 
-%%  TX Categoria 2
-[TX2_tPbPrDC,TX2_tPbPrAC,TX2_tYdc,TX2_tYac]=convHuffMat(tPbPrDC, tPbPrAC, tYdc, tYac, 11);
-
-%%  TX Categoria 3
-[TX3_tPbPrDC,TX3_tPbPrAC,TX3_tYdc,TX3_tYac]=convHuffMat(tPbPrDC, tPbPrAC, tYdc, tYac, 12);
-
-%%  TX Categoria 4
-[TX4_tPbPrDC,TX4_tPbPrAC,TX4_tYdc,TX4_tYac]=convHuffMat(tPbPrDC, tPbPrAC, tYdc, tYac, 13);
-
-%%  TX Categoria 5
-[TX5_tPbPrDC,TX5_tPbPrAC,TX5_tYdc,TX5_tYac]=convHuffMat(tPbPrDC, tPbPrAC, tYdc, tYac, 14);
-
-%%  TX Categoria 6
-[TX6_tPbPrDC,TX6_tPbPrAC,TX6_tYdc,TX6_tYac]=convHuffMat(tPbPrDC, tPbPrAC, tYdc, tYac, 15);
-
-%%  TX Categoria 7
-[TX7_tPbPrDC,TX7_tPbPrAC,TX7_tYdc,TX7_tYac]=convHuffMat(tPbPrDC, tPbPrAC, tYdc, tYac, 16);
-
-%%  TX Categoria 8
-[TX8_tPbPrDC,TX8_tPbPrAC,TX8_tYdc,TX8_tYac]=convHuffMat(tPbPrDC, tPbPrAC, tYdc, tYac, 17);
-
-[txYdc, txPbPrDC, txYac, txPbPrAC]=serialTX(PbPrDCCat, PbPrACCat, YacCat, YdcCat,TX0_tPbPrDC,TX0_tPbPrAC,TX0_tYdc,TX0_tYac,TX1_tPbPrDC,TX1_tPbPrAC,TX1_tYdc,TX1_tYac,TX2_tPbPrDC,TX2_tPbPrAC,TX2_tYdc,TX2_tYac,TX3_tPbPrDC,TX3_tPbPrAC,TX3_tYdc,TX3_tYac,TX4_tPbPrDC,TX4_tPbPrAC,TX4_tYdc,TX4_tYac,TX5_tPbPrDC,TX5_tPbPrAC,TX5_tYdc,TX5_tYac,TX6_tPbPrDC,TX6_tPbPrAC,TX6_tYdc,TX6_tYac,TX7_tPbPrDC,TX7_tPbPrAC,TX7_tYdc,TX7_tYac,TX8_tPbPrDC,TX8_tPbPrAC,TX8_tYdc,TX8_tYac);
-
+% txPbPrAC=[huffmanenco(PbPrACCat(i),tPbPrAC);n];
+% txYac=[huffmanenco(YacCat(i),tYdc);n];
+% txYdc=[huffmanenco(YdcCat(i),tYac);n];
 end

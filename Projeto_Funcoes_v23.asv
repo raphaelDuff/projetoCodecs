@@ -88,22 +88,27 @@ for img = 1:5 %Verifica do quadro 1 até o quadro final (NumberOfFrames) loop
     
     
     %%%%%%% BLOCO CODIFICADOR DE CANAL INICIO %%%%%%%%
-    taxaCodificacao = dialogChooseTaxa;
-    switch taxaCodificacao
+    taxa = choosedialogExemplo
+    switch taxa
         case('1/2')
-            taxaCodificacao = [1;1];
+            taxa = [1;1];
         case('2/3')
-            taxaCodificacao = [1;1;0;1];
+            taxa = [1;1;0;1];
         case('3/4')
-            taxaCodificacao = [1;1;0;1;1;0];
+            taxa = [1;1;0;1;1;0];
         case('5/6')
-            taxaCodificacao = [1;1;0;1;1;0;0;1;1;0];
+            taxa = [1;1;0;1;1;0;0;1;1;0];
         case('7/8')
-            taxaCodificacao = [1;1;0;1;0;1;0;1;1;0;0;1;1;0];
+            taxa = [1;1;0;1;0;1;0;1;1;0;0;1;1;0];
     end
             
-      
-    [txY_cod_final,txPbPr_cod_final] = Func_CodCanal(taxaCodificacao,txY,txPbPr);
+    Tx1 = [1;1]; % Taxa de codificação 1/2
+    Tx2 = [1;1;0;1]; % Taxa de codificação 2/3
+    Tx3 = [1;1;0;1;1;0]; % Taxa de codificação 3/4
+    Tx4 = [1;1;0;1;1;0;0;1;1;0]; % Taxa de codificação 5/6
+    Tx5 = [1;1;0;1;0;1;0;1;1;0;0;1;1;0]; % Taxa de codificação 7/8 
+    
+    [txY_cod_final,txPbPr_cod_final] = Func_CodCanal(Tx1,txY,txPbPr);
     
     
     %%%%%%% BLOCO CODIFICADOR DE CANAL FIM %%%%%%%%
@@ -112,7 +117,7 @@ for img = 1:5 %Verifica do quadro 1 até o quadro final (NumberOfFrames) loop
     
     %%%%%%% BLOCO DECODIFICADOR DE CANAL INICIO %%%%%%%%
     
-    [txY_dec_final,txPbPr_dec_final] = Func_DecodCanal(taxaCodificacao,txY_cod_final,txPbPr_cod_final); 
+    [txY_dec_final,txPbPr_dec_final] = Func_DecodCanal(Tx1,txY_cod_final,txPbPr_cod_final); 
     
     %%%%%%% BLOCO DECODIFICADOR DE CANAL FIM %%%%%%%%
     

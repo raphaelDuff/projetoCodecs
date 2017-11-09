@@ -19,19 +19,15 @@ taxaCodificacao = dialogChooseTaxa;
     switch taxaCodificacao
         case('1/2')
             taxaCodificacao = [1;1];
-            traceDepth=98;
         case('2/3')
             taxaCodificacao = [1;1;0;1];
-            traceDepth=294;
+  
         case('3/4')
             taxaCodificacao = [1;1;0;1;1;0];
-            traceDepth=392;
         case('5/6')
             taxaCodificacao = [1;1;0;1;1;0;0;1;1;0];
-            traceDepth=588;
         case('7/8')
             taxaCodificacao = [1;1;0;1;0;1;0;1;1;0;0;1;1;0];
-            traceDepth=784;
     end
     
     %%%%%%% FIM DO BLOCO PARA ESCOLHA DA TAXA DE CODIFICAÇÃO %%%%%%%%
@@ -69,6 +65,12 @@ for img = 1:5 %Verifica do quadro 1 até o quadro final (NumberOfFrames) loop
     %%%%%%% BLOCO HUFFMAN INICIO (TX) %%%%%%%%
     
     [txY, txPbPr]=statistics(Yq_Concat_FINAL, Pbq_Concat_FINAL, Prq_Concat_FINAL);
+    
+    traceDepth = input(prompt);
+    conta = rem(traceDepth,txY)
+    if (x ~= 0)
+        traceDepth = traceDepth + (txY - x)
+    end
     
     %%%%%%% BLOCO HUFFMAN FIM (TX) %%%%%%%%
     
@@ -112,7 +114,7 @@ for img = 1:5 %Verifica do quadro 1 até o quadro final (NumberOfFrames) loop
     %%%%%%% BLOCO CODIFICADOR DE CANAL INICIO %%%%%%%%
                
       
-    [txY_cod_final,txPbPr_cod_final] = Func_CodCanal(taxaCodificacao,txY,txPbPr);
+    [txY_cod_final,txPbPr_cod_final] = Func_CodCanal(traceDepth,taxaCodificacao,txY,txPbPr);
     
     
     %%%%%%% BLOCO CODIFICADOR DE CANAL FIM %%%%%%%%

@@ -1,4 +1,4 @@
-function [txY_cod_final,txPbPr_cod_final] = Func_CodCanal(taxa,txY,txPbPr)
+function [txY_cod_final,txPbPr_cod_final] = Func_CodCanal(traceDepth,taxa,txY,txPbPr)
 
 convEncoder = comm.ConvolutionalEncoder(poly2trellis(7, [171 133]));
 convEncoder.PuncturePatternSource = 'Property';

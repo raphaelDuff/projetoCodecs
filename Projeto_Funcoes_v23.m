@@ -13,7 +13,29 @@ v = VideoReader('Happy_Feet.avi');
 frame = 1;
 
 images = cell(NumberOfFrames,1); % Cria matriz para receber todas as imagens após DCT
-
+%%% Bloco para chamar o dialogbox para escolha da taxa de codificação do
+%%% canal
+taxaCodificacao = dialogChooseTaxa;
+    switch taxaCodificacao
+        case('1/2')
+            taxaCodificacao = [1;1];
+            traceDepth=98;
+        case('2/3')
+            taxaCodificacao = [1;1;0;1];
+            traceDepth=294;
+        case('3/4')
+            taxaCodificacao = [1;1;0;1;1;0];
+            traceDepth=392;
+        case('5/6')
+            taxaCodificacao = [1;1;0;1;1;0;0;1;1;0];
+            traceDepth=588;
+        case('7/8')
+            taxaCodificacao = [1;1;0;1;0;1;0;1;1;0;0;1;1;0];
+            traceDepth=784;
+    end
+    
+    %%%%%%% FIM DO BLOCO PARA ESCOLHA DA TAXA DE CODIFICAÇÃO %%%%%%%%
+    
 for img = 1:5 %Verifica do quadro 1 até o quadro final (NumberOfFrames) loop
     
     %%%%%%% BLOCO FONTE INICIO %%%%%%%%
@@ -88,20 +110,7 @@ for img = 1:5 %Verifica do quadro 1 até o quadro final (NumberOfFrames) loop
     
     
     %%%%%%% BLOCO CODIFICADOR DE CANAL INICIO %%%%%%%%
-    taxaCodificacao = dialogChooseTaxa;
-    switch taxaCodificacao
-        case('1/2')
-            taxaCodificacao = [1;1];
-        case('2/3')
-            taxaCodificacao = [1;1;0;1];
-        case('3/4')
-            taxaCodificacao = [1;1;0;1;1;0];
-        case('5/6')
-            taxaCodificacao = [1;1;0;1;1;0;0;1;1;0];
-        case('7/8')
-            taxaCodificacao = [1;1;0;1;0;1;0;1;1;0;0;1;1;0];
-    end
-            
+               
       
     [txY_cod_final,txPbPr_cod_final] = Func_CodCanal(taxaCodificacao,txY,txPbPr);
     

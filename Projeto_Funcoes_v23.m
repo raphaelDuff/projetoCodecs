@@ -15,7 +15,7 @@ frame = 1;
 images = cell(NumberOfFrames,1); % Cria matriz para receber todas as imagens após DCT
 %%% Bloco para chamar o dialogbox para escolha da taxa de codificação do
 %%% canal
-taxaCodificacao = dialogChooseTaxa;
+taxaCodificacao = dialogChooseTaxa; 
     switch taxaCodificacao
         case('1/2')
             taxaCodificacao = [1;1];
@@ -66,14 +66,15 @@ for img = 1:5 %Verifica do quadro 1 até o quadro final (NumberOfFrames) loop
     
     [txY, txPbPr]=statistics(Yq_Concat_FINAL, Pbq_Concat_FINAL, Prq_Concat_FINAL);
     
-    traceDepth = input(prompt);
-    conta = rem(traceDepth,txY)
-    if (x ~= 0)
-        traceDepth = traceDepth + (txY - x)
-    end
+    % traceDepth = input(prompt);
+    
+    taxaCodificacao = dialogChooseTaxa;
+    
     
     %%%%%%% BLOCO HUFFMAN FIM (TX) %%%%%%%%
     
+   
+    %%%%%%% TAXA REGRESSAO CODIGO CANAL - (traceDepth) %%%%%%%%
     
     %%%%%%% BLOCO RUIDO INICIO %%%%%%%%
     L = 5000; %Número max de amostras do ruido
@@ -108,6 +109,14 @@ for img = 1:5 %Verifica do quadro 1 até o quadro final (NumberOfFrames) loop
     Func_ASK_FSK_PSK(msglen);
     
     %%%%%%% BLOCO TEORIA INICIO %%%%%%%%
+    
+    %%%%%%% TAXA REGRESSAO CODIGO CANAL - (traceDepth) INICIO %%%%%%%%
+
+    traceDepth = dialogChooseDepth; %chama a DialogBox
+    traceDepth = str2num(traceDepth);
+    
+    %%%%%%% TAXA REGRESSAO CODIGO CANAL - (traceDepth) FIM %%%%%%%%
+
     
     
     

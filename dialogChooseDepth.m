@@ -1,30 +1,11 @@
-function choice = dialogChooseDepth
-
-    d = dialog('Position',[300 300 250 150],'Name','Taxa de TrackBackDepth');
-    txt = uicontrol('Parent',d,...
-           'Style','text',...
-           'Position',[20 80 210 40],...
-           'String','Selecione a tax');
-       
-    popup = uicontrol('Parent',d,...
-           'Style','popup',...
-           'Position',[75 70 100 25],...
-           'String',{'1/2';'2/3';'3/4';'5/6';'7/8'},...
-           'Callback',@popup_callback);
-       
-    btn = uicontrol('Parent',d,...
-           'Position',[89 20 70 25],...
-           'String','Aplicar',...
-           'Callback','delete(gcf)');
-       
-    choice = '1/2';
-       
-    % Wait for d to close before running to completion
-    uiwait(d);
-   
-       function popup_callback(popup,event)
-          idx = get(popup,'Value');
-          popup_items = get(popup,'String');
-          choice = char(popup_items(idx,:));
-       end
-end
+function choiceTraceDepth = dialogChooseDepth
+    prompt={'Entre com um valor para a traceDepth (p/ Tx1=1/2 - traceDepth=98 '};
+    name='Profundidade de regressão do código de canal';
+    defaultans={'98'};
+    options.Interpreter = 'tex';
+    answer = inputdlg(prompt,name,[1 40],defaultans,options);
+    end
+    
+%    conta = rem(traceDepth,txY)
+%     if (x ~= 0)
+%         traceDepth = traceDepth + (txY - x)
